@@ -12,12 +12,11 @@ module Rulers
 
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
-      text = controller.send(act)
 
       begin
-        raise RuntimeError, "It's bad request!"
-      rescue RuntimeError => error
-        puts "it's a bad request!!"
+        text = controller.send(act)
+      rescue NoMethodError
+        raise "It's bad request!!!!!"
       end
 
       [200, {'Content-Type' => 'text/html'}, [text]]
